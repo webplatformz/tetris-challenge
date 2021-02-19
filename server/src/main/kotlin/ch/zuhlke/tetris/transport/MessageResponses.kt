@@ -1,23 +1,29 @@
 package ch.zuhlke.tetris.transport
 
-enum class MessageType {
-    BOARD, PIECE
-}
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.fasterxml.jackson.annotation.JsonTypeName
 
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes(
+        JsonSubTypes.Type(TetrisBoardResponse::class),
+        JsonSubTypes.Type(TetrisPieceResponse::class))
 interface MessageResponse {
-    val type: MessageType
 }
 
+@JsonTypeName("BOARD")
 data class TetrisBoardResponse(
-    val board: List<List<Int>>,
+        val board: List<List<Int>>,
 ) : MessageResponse {
-    override val type: MessageType = MessageType.BOARD
 }
 
+@JsonTypeName("PIECE")
 data class TetrisPieceResponse(
-    val movingPiece: List<PositionResponse>
+        val movingPiece: List<PositionResponse>
 ) : MessageResponse {
-    override val type: MessageType = MessageType.PIECE
 }
 
 data class PositionResponse(val x: Int, val y: Int)

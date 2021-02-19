@@ -41,6 +41,19 @@ export class Root {
 
   connectedCallback(): void {
     const webSocket = new WebSocket('ws://localhost:8080/tetris/myfancyusername');
-    webSocket.onopen = () => console.log('connected');
+    webSocket.onopen = () => console.log('websocket connected');
+    webSocket.onmessage = ({data}) => {
+      const parsedMessage = JSON.parse(data) as MessageResponseUnion;
+      switch (parsedMessage.type) {
+        case "BOARD":
+          console.log('Received new board:', parsedMessage.board);
+          break;
+        case "PIECE":
+          console.log('Received new piece:', parsedMessage.movingPiece);
+          break;
+      }
+    };
+    webSocket.onclose = () => console.log('websocket closed');
+    webSocket.onerror = console.error;
   }
 }
