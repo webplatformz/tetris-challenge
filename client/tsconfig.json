@@ -6,7 +6,7 @@
     "experimentalDecorators": true,
     "lib": [
       "dom",
-      "es2015"
+      "ESNext"
     ],
     "moduleResolution": "node",
     "module": "esnext",
