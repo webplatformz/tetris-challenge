@@ -1,1 +1,49 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin gradient($background-color) {
+  background: radial-gradient(circle, lighten($background-color, 20%) 0%, $background-color 100%);
+  border: 0.1rem solid darken($background-color, 10%);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 3rem);
+  grid-template-rows: repeat(20, 3rem);
+
+  [data-type='0'] {
+    @include gradient(black);
+    border: 0.1rem solid lighten(black, 20%);
+  }
+
+  [data-type='1'] {
+    @include gradient(orangered);
+  }
+
+  [data-type='2'] {
+    @include gradient(deepskyblue);
+  }
+
+  [data-type='3'] {
+    @include gradient(darkblue);
+  }
+
+  [data-type='4'] {
+    @include gradient(yellow);
+  }
+
+  [data-type='5'] {
+    @include gradient(green);
+  }
+
+  [data-type='6'] {
+    @include gradient(darkviolet);
+  }
+
+  [data-type='7'] {
+    @include gradient(red);
+  }
+}
 
