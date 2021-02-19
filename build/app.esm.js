@@ -1,1 +1,1 @@
-import{p,b as o}from"./p-6064d9b9.js";(()=>{const o=import.meta.url,r={};return""!==o&&(r.resourcesUrl=new URL(".",o).href),p(r)})().then((p=>o([["p-98d76d3f",[[1,"app-root"]]]],p)));
+import{p,b as t}from"./p-9f92a77b.js";(()=>{const t=import.meta.url,a={};return""!==t&&(a.resourcesUrl=new URL(".",t).href),p(a)})().then((p=>t([["p-f4756b26",[[1,"app-root",{state:[32]}],[1,"app-board",{state:[16]}]]]],p)));
