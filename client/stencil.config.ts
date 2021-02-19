@@ -10,9 +10,7 @@ export const config: Config = {
   outputTargets: [
     {
       type: 'www',
-      // comment the following line to disable service workers in production
       serviceWorker: null,
-      baseUrl: 'https://webplatformz.github.io/tetris-challenge/',
     },
   ],
   plugins: [
