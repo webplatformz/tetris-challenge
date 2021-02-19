@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Tetris Challenge" type="QuarkusGradleBridge">
+    <option name="arguments" />
+    <option name="vmOptions" />
+    <option name="workingDir" value="$PROJECT_DIR$" />
+    <method v="2" />
+  </configuration>
+</component>
