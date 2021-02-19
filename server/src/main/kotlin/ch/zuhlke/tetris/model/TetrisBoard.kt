@@ -1,25 +1,34 @@
 package ch.zuhlke.tetris.model
 
-
-// tick -> mutation
-// board -> blocks
-
-
-class TetrisBoard(width: Int, height: Int, tetrominoProvider: () -> Tetromino) {
+class TetrisBoard(
+    width: Int,
+    height: Int,
+    tetrominoProvider: () -> Tetromino
+) {
 
     private val state = Array(height) { IntArray(width) { 0 } }
-    private var tetromino: Tetromino
+    private var activeTetromino: Tetromino
 
     init {
-        tetromino = tetrominoProvider()
+        activeTetromino = tetrominoProvider()
     }
 
     override fun toString(): String {
-        return state
+        return merge()
             .map { it.joinToString(" ") }
-            .joinToString(System.lineSeparator())
+            .joinToString("\n")
     }
 
     fun tick() {
+        activeTetromino.moveDown()
+    }
+
+    private fun merge(): Array<IntArray> {
+        val merged = state.copyOf()
+        activeTetromino.positions
+            .filter { it.y >= 0 }
+            .forEach { merged[it.y][it.x] = activeTetromino.type }
+        return merged
     }
 }
+

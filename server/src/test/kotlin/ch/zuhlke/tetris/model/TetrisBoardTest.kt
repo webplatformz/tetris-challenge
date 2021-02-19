@@ -16,7 +16,7 @@ class TetrisBoardTest {
             |0 0 0
             """.trimMargin(),
             board.toString()
-        );
+        )
     }
 
     @Test
@@ -31,7 +31,6 @@ class TetrisBoardTest {
             |0 0
             """.trimMargin(),
             board.toString()
-        );
-
+        )
     }
 }
