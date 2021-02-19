@@ -33,4 +33,37 @@ class TetrisBoardTest {
             board.toString()
         )
     }
+
+    @Test
+    fun `set square tetromino to bottom`() {
+        val board = TetrisBoard(2, 2) { Tetromino() }
+
+        board.tick()
+        board.tick()
+
+        assertEquals(
+            """
+            |1 1
+            |1 1
+            """.trimMargin(),
+            board.toString()
+        )
+    }
+
+    @Test
+    fun `element removed after hitting bottom`() {
+        val board = TetrisBoard(2, 2) { Tetromino() }
+
+        board.tick()
+        board.tick()
+        board.tick()
+
+        assertEquals(
+            """
+            |1 1
+            |0 0
+            """.trimMargin(),
+            board.toString()
+        )
+    }
 }
