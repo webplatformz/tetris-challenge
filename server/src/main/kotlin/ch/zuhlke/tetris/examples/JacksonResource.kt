@@ -1,4 +1,4 @@
-package ch.zuhlke.tetris.resteasyjackson
+package ch.zuhlke.tetris.examples
 
 import java.util.*
 import javax.ws.rs.*

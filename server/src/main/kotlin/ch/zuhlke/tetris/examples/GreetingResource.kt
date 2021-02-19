@@ -1,4 +1,4 @@
-package ch.zuhlke.tetris
+package ch.zuhlke.tetris.examples
 
 import javax.ws.rs.GET
 import javax.ws.rs.Path
