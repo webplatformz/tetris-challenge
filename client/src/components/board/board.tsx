@@ -3,7 +3,7 @@ import {Block} from '../root/root';
 
 @Component({
   tag: 'app-board',
-  styleUrl: 'app.scss',
+  styleUrl: 'board.scss',
   shadow: true,
 })
 export class Board {
