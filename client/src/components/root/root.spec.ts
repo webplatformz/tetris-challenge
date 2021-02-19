@@ -1,10 +1,10 @@
 import {newSpecPage} from '@stencil/core/testing';
-import {AppRoot} from "./app-root";
+import {Root} from "./root";
 
 describe('app-root', () => {
   it('should render', async () => {
     const page = await newSpecPage({
-      components: [AppRoot],
+      components: [Root],
       html: `<app-root></app-root>`,
     });
 

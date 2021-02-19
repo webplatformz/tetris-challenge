@@ -1,10 +1,10 @@
 import {newSpecPage} from '@stencil/core/testing';
-import {AppBoard} from "./app-board";
+import {Board} from "./board";
 
 describe('app-board', () => {
   it('should render', async () => {
     const page = await newSpecPage({
-      components: [AppBoard],
+      components: [Board],
       html: `<app-board></app-board>`,
     });
 

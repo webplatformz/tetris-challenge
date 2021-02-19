@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Block } from "./components/app-root/app-root";
+import { Block } from "./components/root/root";
 export namespace Components {
     interface AppBoard {
         "state": readonly Block[][];

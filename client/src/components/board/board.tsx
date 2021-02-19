@@ -1,12 +1,12 @@
 import {Component, h, Host, Prop} from '@stencil/core';
-import {Block} from '../app-root/app-root';
+import {Block} from '../root/root';
 
 @Component({
   tag: 'app-board',
-  styleUrl: 'app-board.scss',
+  styleUrl: 'app.scss',
   shadow: true,
 })
-export class AppBoard {
+export class Board {
   @Prop() state: readonly Block[][] = [[]];
 
   render() {

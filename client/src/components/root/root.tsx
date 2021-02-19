@@ -4,10 +4,10 @@ export type Block = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 @Component({
   tag: 'app-root',
-  styleUrl: 'app-root.scss',
+  styleUrl: 'root.scss',
   shadow: true,
 })
-export class AppRoot {
+export class Root {
   @State() state: Block[][] = [
     [4, 4, 0, 0, 0, 0, 0, 0, 0, 0],
     [4, 4, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,5 +37,10 @@ export class AppRoot {
         <app-board state={this.state}/>
       </Host>
     );
+  }
+
+  connectedCallback(): void {
+    const webSocket = new WebSocket('ws://localhost:8080/tetris/myfancyusername');
+    webSocket.onopen = () => console.log('connected');
   }
 }
