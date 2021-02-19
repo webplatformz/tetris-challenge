@@ -5,6 +5,13 @@ package ch.zuhlke.tetris.model
 // board -> blocks
 
 
-class TetrisBoard {
+class TetrisBoard(width: Int, height: Int) {
 
+    private val state = Array(height) { IntArray(width) { 0 } }
+
+    override fun toString(): String {
+        return state
+            .map { it.joinToString(" ") }
+            .joinToString(System.lineSeparator())
+    }
 }
