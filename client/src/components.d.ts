@@ -5,11 +5,21 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Block } from "./components/app-root/app-root";
 export namespace Components {
+    interface AppBoard {
+        "state": readonly Block[][];
+    }
     interface AppRoot {
     }
 }
 declare global {
+    interface HTMLAppBoardElement extends Components.AppBoard, HTMLStencilElement {
+    }
+    var HTMLAppBoardElement: {
+        prototype: HTMLAppBoardElement;
+        new (): HTMLAppBoardElement;
+    };
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
     }
     var HTMLAppRootElement: {
@@ -17,13 +27,18 @@ declare global {
         new (): HTMLAppRootElement;
     };
     interface HTMLElementTagNameMap {
+        "app-board": HTMLAppBoardElement;
         "app-root": HTMLAppRootElement;
     }
 }
 declare namespace LocalJSX {
+    interface AppBoard {
+        "state"?: readonly Block[][];
+    }
     interface AppRoot {
     }
     interface IntrinsicElements {
+        "app-board": AppBoard;
         "app-root": AppRoot;
     }
 }
@@ -31,6 +46,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "app-board": LocalJSX.AppBoard & JSXBase.HTMLAttributes<HTMLAppBoardElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
         }
     }
