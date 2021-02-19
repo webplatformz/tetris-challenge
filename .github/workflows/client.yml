@@ -1,0 +1,66 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  test:
+    name: Test on Node.js ${{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: 'client'
+    strategy:
+      matrix:
+        node_version: ['15']
+        os: [windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: npm install
+        run: npm ci
+
+      - name: test
+        run: npm run test
+
+      - name: stencil build
+        run: npm run build
+
+  deploy:
+    name: Deploy master to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/master'
+    defaults:
+      run:
+        working-directory: 'client'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15
+
+      - name: npm install
+        run: npm ci
+
+      - name: stencil build
+        run: npm run build
+
+      - name: deploy
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          BRANCH: gh-pages
+          FOLDER: www
+          CLEAN: true
