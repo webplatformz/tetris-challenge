@@ -1,10 +1,7 @@
 package ch.zuhlke.tetris.transport
 
 import java.util.concurrent.ConcurrentHashMap
-import javax.websocket.OnClose
-import javax.websocket.OnError
-import javax.websocket.OnOpen
-import javax.websocket.Session
+import javax.websocket.*
 import javax.websocket.server.PathParam
 import javax.websocket.server.ServerEndpoint
 
@@ -28,6 +25,7 @@ class TetrisWebsocket {
         sessions.remove(username)
     }
 
+    @OnMessage
     fun onMessage(message: String, @PathParam("username") username: String) {
         println("Received message from $username: $message")
     }
