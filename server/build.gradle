@@ -1,8 +1,19 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath group: 'cz.habarta.typescript-generator', name: 'typescript-generator-gradle-plugin', version: '2.29.814'
+    }
+}
+
 plugins {
     id 'org.jetbrains.kotlin.jvm' version "1.4.20"
     id "org.jetbrains.kotlin.plugin.allopen" version "1.4.20"
     id 'io.quarkus'
 }
+apply plugin: 'cz.habarta.typescript-generator'
 
 repositories {
     mavenLocal()
@@ -42,4 +53,11 @@ compileKotlin {
 
 compileTestKotlin {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11
+}
+
+generateTypeScript {
+    jsonLibrary = 'jackson2'
+    classPatterns = ['ch.zuhlke.tetris.transport.*Response']
+    outputKind = 'global'
+    outputFile = '../client/src/backendTypes.d.ts'
 }
