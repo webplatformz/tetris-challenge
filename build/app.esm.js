@@ -1,0 +1,1 @@
+import{p,b as o}from"./p-84dc999d.js";(()=>{const o=import.meta.url,r={};return""!==o&&(r.resourcesUrl=new URL(".",o).href),p(r)})().then((p=>o([["p-25992cc6",[[1,"app-root"]]]],p)));
