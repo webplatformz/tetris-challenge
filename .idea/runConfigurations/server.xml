@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="server" type="QuarkusGradleBridge">
+    <option name="arguments" />
+    <option name="vmOptions" />
+    <option name="workingDir" value="$PROJECT_DIR$/server" />
+    <method v="2" />
+  </configuration>
+</component>
