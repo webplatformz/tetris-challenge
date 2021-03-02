@@ -6,17 +6,15 @@ import org.junit.jupiter.api.Test
 class TetrisBoardStraightTetrominoTest {
 
     @Test
-    fun `set straight tetromino`() {
-        val board = TetrisBoard(2, 4) { StraightTetromino() }
+    fun `straight tetromino until it hits bottom`() {
+        val board = TetrisBoard(4, 2) { StraightTetromino() }
 
         board.tick()
 
         assertEquals(
             """
-            |2 0
-            |0 0
-            |0 0
-            |0 0
+            |2 2 2 2
+            |0 0 0 0
             """.trimMargin(),
             board.toString()
         )
@@ -25,10 +23,18 @@ class TetrisBoardStraightTetrominoTest {
 
         assertEquals(
             """
-            |2 0
-            |2 0
-            |0 0
-            |0 0
+            |0 0 0 0
+            |2 2 2 2
+            """.trimMargin(),
+            board.toString()
+        )
+
+        board.tick()
+
+        assertEquals(
+            """
+            |2 2 2 2
+            |0 0 0 0
             """.trimMargin(),
             board.toString()
         )

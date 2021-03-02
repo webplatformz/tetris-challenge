@@ -1,6 +1,6 @@
 package ch.zuhlke.tetris.model
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class TetrisBoardTest {
@@ -36,13 +36,15 @@ class TetrisBoardTest {
 
     @Test
     fun `set square tetromino to bottom`() {
-        val board = TetrisBoard(2, 2) { SquareTetromino() }
+        val board = TetrisBoard(2, 3) { SquareTetromino() }
 
+        board.tick()
         board.tick()
         board.tick()
 
         assertEquals(
             """
+            |0 0
             |1 1
             |1 1
             """.trimMargin(),
