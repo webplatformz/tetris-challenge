@@ -16,7 +16,6 @@ plugins {
 apply plugin: 'cz.habarta.typescript-generator'
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
