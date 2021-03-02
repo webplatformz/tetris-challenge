@@ -7,7 +7,7 @@ class TetrisBoardStraightTetrominoTest {
 
     @Test
     fun `set straight tetromino`() {
-        val board = TetrisBoard(2, 4) { SquareTetromino() }
+        val board = TetrisBoard(2, 4) { StraightTetromino() }
 
         board.tick()
 
@@ -27,7 +27,6 @@ class TetrisBoardStraightTetrominoTest {
             """
             |1 0
             |1 0
-            |0 0
             |0 0
             |0 0
             """.trimMargin(),

@@ -3,11 +3,11 @@ package ch.zuhlke.tetris.model
 class TetrisBoard(
     private val width: Int,
     private val height: Int,
-    private val tetrominoProvider: () -> SquareTetromino
+    private val tetrominoProvider: () -> Tetromino
 ) {
 
     private var state = Array(height) { IntArray(width) { 0 } }
-    private var activeTetromino: SquareTetromino
+    private var activeTetromino: Tetromino
 
     init {
         activeTetromino = tetrominoProvider()
@@ -23,7 +23,7 @@ class TetrisBoard(
         if (isTetrominoAtBottom()) {
             removeCompleted()
 
-            activeTetromino = tetrominoProvider();
+            activeTetromino = tetrominoProvider()
         }
 
         activeTetromino.moveDown()
