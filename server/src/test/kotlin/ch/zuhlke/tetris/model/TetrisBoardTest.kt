@@ -8,7 +8,7 @@ class TetrisBoardTest {
     @Test
     fun `create board`() {
 
-        val board = TetrisBoard(3, 2) { Tetromino() };
+        val board = TetrisBoard(3, 2) { Tetromino() }
 
         assertEquals(
             """
@@ -28,6 +28,37 @@ class TetrisBoardTest {
         assertEquals(
             """
             |1 1
+            |0 0
+            """.trimMargin(),
+            board.toString()
+        )
+    }
+
+
+    @Test
+    fun `set straight tetromino`() {
+        val board = TetrisBoard(2, 4) { Tetromino() }
+
+        board.tick()
+
+        assertEquals(
+            """
+            |1 0
+            |0 0
+            |0 0
+            |0 0
+            """.trimMargin(),
+            board.toString()
+        )
+
+        board.tick()
+
+        assertEquals(
+            """
+            |1 0
+            |1 0
+            |0 0
+            |0 0
             |0 0
             """.trimMargin(),
             board.toString()
