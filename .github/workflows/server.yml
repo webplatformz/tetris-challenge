@@ -1,0 +1,28 @@
+name: Kotlin CI
+
+on: [push]
+
+jobs:
+  build:
+    name: Build and test with java version ${{ matrix.java_version }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'server'
+    strategy:
+      matrix:
+        java_version: ['11']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11.0.10' # The JDK version to make available on the path.
+          java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+          architecture: x64 # (x64 or x86) - defaults to x64
+
+      - name: build and test project
+        run: ./gradlew build
