@@ -1,6 +1,6 @@
 name: Kotlin CI
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:
@@ -11,9 +11,18 @@ jobs:
         working-directory: 'server'
     strategy:
       matrix:
-        java_version: ['11']
+        java_version: [ '11' ]
 
     steps:
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Checkout
         uses: actions/checkout@v2
 
