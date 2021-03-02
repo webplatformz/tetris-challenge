@@ -57,7 +57,9 @@ compileTestKotlin {
 
 generateTypeScript {
     jsonLibrary = 'jackson2'
-    classPatterns = ['ch.zuhlke.tetris.transport.*Response']
+    classPatterns = ['ch.zuhlke.tetris.transport.*Response',
+                     'ch.zuhlke.tetris.transport.*Request',
+                     'ch.zuhlke.tetris.transport.RequestMessage']
     outputKind = 'global'
     outputFile = '../client/src/backendTypes.d.ts'
 }
