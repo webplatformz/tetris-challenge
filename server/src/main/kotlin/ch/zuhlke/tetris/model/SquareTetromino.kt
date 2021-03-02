@@ -1,11 +1,6 @@
 package ch.zuhlke.tetris.model
 
-data class Position(
-    val x: Int,
-    val y: Int,
-)
-
-class Tetromino(
+class SquareTetromino(
     var positions: List<Position> = listOf(
         Position(x = 0, y = -2),
         Position(x = 1, y = -2),

@@ -8,7 +8,7 @@ class TetrisBoardTest {
     @Test
     fun `create board`() {
 
-        val board = TetrisBoard(3, 2) { Tetromino() }
+        val board = TetrisBoard(3, 2) { SquareTetromino() }
 
         assertEquals(
             """
@@ -21,7 +21,7 @@ class TetrisBoardTest {
 
     @Test
     fun `set square tetromino`() {
-        val board = TetrisBoard(2, 2) { Tetromino() }
+        val board = TetrisBoard(2, 2) { SquareTetromino() }
 
         board.tick()
 
@@ -34,40 +34,9 @@ class TetrisBoardTest {
         )
     }
 
-
-    @Test
-    fun `set straight tetromino`() {
-        val board = TetrisBoard(2, 4) { Tetromino() }
-
-        board.tick()
-
-        assertEquals(
-            """
-            |1 0
-            |0 0
-            |0 0
-            |0 0
-            """.trimMargin(),
-            board.toString()
-        )
-
-        board.tick()
-
-        assertEquals(
-            """
-            |1 0
-            |1 0
-            |0 0
-            |0 0
-            |0 0
-            """.trimMargin(),
-            board.toString()
-        )
-    }
-
     @Test
     fun `set square tetromino to bottom`() {
-        val board = TetrisBoard(2, 2) { Tetromino() }
+        val board = TetrisBoard(2, 2) { SquareTetromino() }
 
         board.tick()
         board.tick()
@@ -83,7 +52,7 @@ class TetrisBoardTest {
 
     @Test
     fun `element removed after hitting bottom`() {
-        val board = TetrisBoard(2, 2) { Tetromino() }
+        val board = TetrisBoard(2, 2) { SquareTetromino() }
 
         board.tick()
         board.tick()
