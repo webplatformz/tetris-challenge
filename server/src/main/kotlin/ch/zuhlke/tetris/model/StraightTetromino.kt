@@ -8,5 +8,5 @@ class StraightTetromino(
         Position(x = 0, y = -1),
     )
 ) : Tetromino() {
-    override val type = 1
+    override val type = 2
 }
