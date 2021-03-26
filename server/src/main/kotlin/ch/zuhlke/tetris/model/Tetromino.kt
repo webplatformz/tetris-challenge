@@ -10,6 +10,11 @@ abstract class Tetromino {
         return this
     }
 
+    fun moveRight(steps: Int = 1): Tetromino {
+        this.positions = this.positions.map { it.copy(x = it.x + steps) }
+        return this
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
