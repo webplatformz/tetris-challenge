@@ -5,6 +5,8 @@
 
 .board {
   display: grid;
+  grid-template-columns: repeat(10, 3rem);
+  grid-template-rows: repeat(20, 3rem);
 
   [data-type='0'] {
     @include gradient(black);
