@@ -5,7 +5,28 @@ abstract class Tetromino {
 
     abstract val type: Int
 
-    fun moveDown() {
+    fun moveDown(): Tetromino {
         this.positions = this.positions.map { it.copy(y = it.y + 1) }
+        return this
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Tetromino
+
+        if (positions != other.positions) return false
+        if (type != other.type) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = positions.hashCode()
+        result = 31 * result + type
+        return result
+    }
+
+
 }
