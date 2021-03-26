@@ -15,6 +15,8 @@ abstract class Tetromino {
         return this
     }
 
+    abstract fun rotateRight()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -32,6 +34,7 @@ abstract class Tetromino {
         result = 31 * result + type
         return result
     }
+
 
 
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 
 class TetrisBoardTest {
+
     @Test
     fun `should stop tetromino on collision`() {
         val board = TetrisBoard(3, 6) { SquareTetromino() }
