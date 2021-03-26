@@ -5,14 +5,14 @@ import ch.zuhlke.tetris.model.StraightTetromino
 import ch.zuhlke.tetris.model.TetrisBoard
 import ch.zuhlke.tetris.model.Tetromino
 
-const val CYCLE_TIME: Long = 1000
+const val CYCLE_TIME: Long = 500
 const val BOARD_WIDTH = 10
 const val BOARD_HEIGHT = 20
 
 class Game {
     private var isRunning: Boolean = true
 
-    private var tetrominoIndex = 0;
+    private var tetrominoIndex = 0
 
     fun start(onBoardChanged: (state: Array<IntArray>) -> Unit, onPieceChanged: (Tetromino) -> Unit) {
         val tetrisBoard = TetrisBoard(

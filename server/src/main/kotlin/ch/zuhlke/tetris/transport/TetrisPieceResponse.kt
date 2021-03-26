@@ -5,5 +5,5 @@ import com.fasterxml.jackson.annotation.JsonTypeName
 @JsonTypeName("PIECE")
 data class TetrisPieceResponse(
     val movingPiece: List<PositionResponse>,
-    val type: Int
+    val pieceType: Int
 ) : ResponseMessage
