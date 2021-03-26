@@ -15,6 +15,7 @@ class TetrisBoard(
 
     init {
         activeTetromino = tetrominoProvider()
+        boardChanged(state)
     }
 
     override fun toString(): String {

@@ -86,19 +86,31 @@ class TetrisBoardTest {
 
     @Test
     fun `tick calls boardChange with updated board when a piece cannot move any further`() {
-        var actualBoard: Array<IntArray>? = null
+        val actualBoards: MutableList<Array<IntArray>> = mutableListOf()
         val board = TetrisBoard(
+            width = 2,
+            height = 2,
+            boardChanged = { actualBoards.add(it) }
+        ) { SquareTetromino() }
+
+        assertEquals(actualBoards.size, 1)
+        board.tick()
+        assertEquals(actualBoards.size, 1)
+        board.tick()
+        assertEquals(actualBoards.size, 1)
+        board.tick()
+        assertEquals(actualBoards.size, 2)
+    }
+
+    @Test
+    fun `should call boardChange with initial board`() {
+        var actualBoard: Array<IntArray>? = null
+        TetrisBoard(
                 width = 2,
                 height = 2,
                 boardChanged = { actualBoard = it }
         ) { SquareTetromino() }
 
-        board.tick()
-        assertNull(actualBoard)
-        board.tick()
-        assertNull(actualBoard)
-
-        board.tick()
         assertNotNull(actualBoard)
     }
 }
