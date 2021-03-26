@@ -1,4 +1,11 @@
-:host {
+.board {
   display: flex;
   justify-content: center;
+}
+
+.header {
+  text-align: center;
+  display: block;
+  text-transform: uppercase;
+  font-size: 1.25rem;
 }

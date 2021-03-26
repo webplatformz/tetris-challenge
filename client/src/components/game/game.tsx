@@ -15,7 +15,12 @@ export class Game {
   render() {
     return (
       <Host>
-        <app-board state={this.currentBoard}/>
+        <header class="header">
+          <h1>Tetris</h1>
+        </header>
+        <main class="board">
+          <app-board state={this.currentBoard}/>
+        </main>
       </Host>
     );
   }
