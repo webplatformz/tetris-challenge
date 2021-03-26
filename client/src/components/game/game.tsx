@@ -32,8 +32,6 @@ export class Game {
         case 'PIECE':
           this.currentBoard = updateBoardWithPiece(this.baseBoard, response);
           break;
-        default:
-          break;
       }
     });
   }
