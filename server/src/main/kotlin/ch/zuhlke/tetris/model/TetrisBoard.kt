@@ -19,7 +19,7 @@ class TetrisBoard(
             .joinToString("\n")
     }
 
-    fun tick() {
+    fun tick(boardChanged: (() -> Array<IntArray>)? = null, pieceChange: (() -> Tetromino)? = null) {
         if (isTetrominoAtBottom()) {
             removeCompleted()
 
