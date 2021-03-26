@@ -10,12 +10,14 @@ export class Board {
   @Prop() state: BoardState;
 
   render() {
-    return (
-      <Host>
-        <div class='board'>
-          {this.state.flatMap(row => row.map(element => (<div class='block' data-type={element}/>)))}
-        </div>
-      </Host>
-    );
+    if (this.state) {
+      return (
+        <Host>
+          <div class='board'>
+            {this.state.flatMap(row => row.map(element => (<div class='block' data-type={element}/>)))}
+          </div>
+        </Host>
+      );
+    }
   }
 }
