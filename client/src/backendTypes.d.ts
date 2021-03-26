@@ -1,13 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.29.814 on 2021-03-02 11:32:16.
+// Generated using typescript-generator version 2.29.814 on 2021-03-26 10:38:23.
 
 interface CreateGameRequest extends RequestMessage {
     type: "CREATE_GAME";
-}
-
-interface MessageResponse {
-    type: "BOARD" | "PIECE";
 }
 
 interface PositionResponse {
@@ -19,16 +15,20 @@ interface RequestMessage {
     type: "CREATE_GAME";
 }
 
-interface TetrisBoardResponse extends MessageResponse {
+interface ResponseMessage {
+    type: "BOARD" | "PIECE";
+}
+
+interface TetrisBoardResponse extends ResponseMessage {
     type: "BOARD";
     board: number[][];
 }
 
-interface TetrisPieceResponse extends MessageResponse {
+interface TetrisPieceResponse extends ResponseMessage {
     type: "PIECE";
     movingPiece: PositionResponse[];
 }
 
-type MessageResponseUnion = TetrisBoardResponse | TetrisPieceResponse;
-
 type RequestMessageUnion = CreateGameRequest;
+
+type ResponseMessageUnion = TetrisBoardResponse | TetrisPieceResponse;

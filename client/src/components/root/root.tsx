@@ -1,4 +1,5 @@
 import {Component, h, Host, State} from '@stencil/core';
+import {initializeWebSocket, onMessage, startGame} from '../../webSocketApi';
 
 export type Block = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
@@ -40,20 +41,19 @@ export class Root {
   }
 
   connectedCallback(): void {
-    const webSocket = new WebSocket('ws://localhost:8080/tetris/myfancyusername');
-    webSocket.onopen = () => console.log('websocket connected');
-    webSocket.onmessage = ({data}) => {
-      const parsedMessage = JSON.parse(data) as MessageResponseUnion;
-      switch (parsedMessage.type) {
-        case "BOARD":
-          console.log('Received new board:', parsedMessage.board);
+    initializeWebSocket('myfancyusername').then(() => startGame());
+    onMessage((response) => {
+      switch (response.type) {
+        case 'BOARD':
+          console.log('Received new board:', response.board);
           break;
-        case "PIECE":
-          console.log('Received new piece:', parsedMessage.movingPiece);
+        case 'PIECE':
+          console.log('Received new piece:', response.movingPiece);
+          break;
+        default:
+          console.log('Received unhandled message:', response);
           break;
       }
-    };
-    webSocket.onclose = () => console.log('websocket closed');
-    webSocket.onerror = console.error;
+    });
   }
 }
