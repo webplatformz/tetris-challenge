@@ -20,6 +20,14 @@ export function startGame(): void {
   send({type: 'CREATE_GAME'});
 }
 
+export function movePiece(direction: Direction) {
+  send({type: 'MOVE_PIECE', direction});
+}
+
+export function rotatePiece(direction: Direction) {
+  send({type: 'ROTATE_PIECE', direction});
+}
+
 function send(message: RequestMessageUnion): void {
   webSocket.send(JSON.stringify(message));
 }

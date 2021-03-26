@@ -6,7 +6,7 @@ describe('app-game', () => {
   let websocket: WebSocket;
 
   beforeEach(() => {
-    websocket = {} as WebSocket;
+    websocket = {send: jest.fn() as any} as WebSocket;
     global.WebSocket = function () {
       return websocket;
     } as any;
@@ -55,6 +55,40 @@ describe('app-game', () => {
       [0, 1, 0],
       [0, 1, 0],
     ]);
+  });
+
+  it.each<[Direction, string]>([
+    ['LEFT', 'ArrowLeft'],
+    ['RIGHT', 'ArrowRight'],
+  ])('should send MOVE_PIECE with direction %s when %s pressed', async (direction, arrowKey) => {
+    const page = await newSpecPage({
+      components: [Game, Board],
+      html: `<app-game></app-game>`,
+    });
+
+    page.win.dispatchEvent(new KeyboardEvent('keydown', {key: arrowKey}));
+
+    expect(websocket.send).toHaveBeenCalledWith(JSON.stringify({
+      type: 'MOVE_PIECE',
+      direction,
+    } as MovePieceRequest));
+  });
+
+  it.each<[Direction, string]>([
+    ['LEFT', 'ArrowDown'],
+    ['RIGHT', 'ArrowUp'],
+  ])('should send ROTATE_PIECE with direction %s when %s pressed', async (direction, arrowKey) => {
+    const page = await newSpecPage({
+      components: [Game, Board],
+      html: `<app-game></app-game>`,
+    });
+
+    page.win.dispatchEvent(new KeyboardEvent('keydown', {key: arrowKey}));
+
+    expect(websocket.send).toHaveBeenCalledWith(JSON.stringify({
+      type: 'ROTATE_PIECE',
+      direction,
+    } as RotatePieceRequest));
   });
 });
 

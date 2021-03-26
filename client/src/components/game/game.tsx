@@ -1,5 +1,5 @@
-import {Component, h, Host, State} from '@stencil/core';
-import {initializeWebSocket, onMessage, startGame} from '../../webSocketApi';
+import {Component, h, Host, Listen, State} from '@stencil/core';
+import {initializeWebSocket, movePiece, onMessage, rotatePiece, startGame} from '../../webSocketApi';
 
 export type BoardState = number[][];
 
@@ -40,9 +40,27 @@ export class Game {
       }
     });
   }
+
+  @Listen('keydown', {target: 'window'})
+  keydownHandler({key}: KeyboardEvent): void {
+    switch (key) {
+      case 'ArrowLeft':
+        movePiece('LEFT');
+        break;
+      case 'ArrowRight':
+        movePiece('RIGHT');
+        break;
+      case 'ArrowUp':
+        rotatePiece('RIGHT');
+        break;
+      case 'ArrowDown':
+        rotatePiece('LEFT');
+        break;
+    }
+  }
 }
 
-function updateBoardWithPiece(baseBoard: BoardState, response: TetrisPieceResponse): BoardState  {
+function updateBoardWithPiece(baseBoard: BoardState, response: TetrisPieceResponse): BoardState {
   const xs = response.movingPiece.map(piece => piece.x);
   const ys = response.movingPiece.map(piece => piece.y);
 
