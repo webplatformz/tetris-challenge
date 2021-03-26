@@ -15,6 +15,7 @@ class TetrisBoard(
 
     init {
         activeTetromino = tetrominoProvider()
+        boardChanged(state)
     }
 
     override fun toString(): String {
@@ -24,7 +25,7 @@ class TetrisBoard(
     }
 
     fun tick() {
-        if (isTetrominoAtBottom()) {
+        if (isTetrominoBlocked()) {
             removeCompleted()
 
             activeTetromino = tetrominoProvider()
@@ -34,10 +35,6 @@ class TetrisBoard(
         activeTetromino.moveDown()
 
         pieceChange(activeTetromino)
-    }
-
-    fun getState(): Array<IntArray> {
-        return cloneState()
     }
 
     private fun removeCompleted() {
@@ -51,9 +48,14 @@ class TetrisBoard(
         return line.all { it > 0 }
     }
 
-    private fun isTetrominoAtBottom(): Boolean {
-        return activeTetromino.positions.any { it.y >= height - 1 }
+    private fun isTetrominoBlocked(): Boolean {
+        return activeTetromino.positions
+            .filter { it.y in 0 until height }
+            .any { it.isAtBottom() || it.isBlockedByOther() }
     }
+
+    private fun Position.isBlockedByOther() = state[y + 1][x] != 0
+    private fun Position.isAtBottom() = y >= height - 1
 
     private fun mergedState(): Array<IntArray> {
         val merged = cloneState()
