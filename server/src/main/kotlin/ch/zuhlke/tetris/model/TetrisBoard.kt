@@ -23,7 +23,7 @@ class TetrisBoard(
         if (isTetrominoAtBottom()) {
             removeCompleted()
 
-            activeTetromino = tetrominoProvider();
+            activeTetromino = tetrominoProvider()
         }
 
         activeTetromino.moveDown()
@@ -45,11 +45,15 @@ class TetrisBoard(
     }
 
     private fun mergedState(): Array<IntArray> {
-        val merged = state.copyOf()
+        val merged = cloneState()
         activeTetromino.positions
             .filter { it.y in 0 until height }
             .forEach { merged[it.y][it.x] = activeTetromino.type }
         return merged
+    }
+
+    private fun cloneState(): Array<IntArray> {
+        return Array(height) { index -> state[index].copyOf() }
     }
 }
 

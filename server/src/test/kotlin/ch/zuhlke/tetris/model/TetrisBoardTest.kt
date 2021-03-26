@@ -1,6 +1,6 @@
 package ch.zuhlke.tetris.model
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class TetrisBoardTest {
@@ -8,7 +8,7 @@ class TetrisBoardTest {
     @Test
     fun `create board`() {
 
-        val board = TetrisBoard(3, 2) { Tetromino() };
+        val board = TetrisBoard(3, 2) { SquareTetromino() }
 
         assertEquals(
             """
@@ -21,7 +21,7 @@ class TetrisBoardTest {
 
     @Test
     fun `set square tetromino`() {
-        val board = TetrisBoard(2, 2) { Tetromino() }
+        val board = TetrisBoard(2, 2) { SquareTetromino() }
 
         board.tick()
 
@@ -36,13 +36,15 @@ class TetrisBoardTest {
 
     @Test
     fun `set square tetromino to bottom`() {
-        val board = TetrisBoard(2, 2) { Tetromino() }
+        val board = TetrisBoard(2, 3) { SquareTetromino() }
 
+        board.tick()
         board.tick()
         board.tick()
 
         assertEquals(
             """
+            |0 0
             |1 1
             |1 1
             """.trimMargin(),
@@ -52,7 +54,7 @@ class TetrisBoardTest {
 
     @Test
     fun `element removed after hitting bottom`() {
-        val board = TetrisBoard(2, 2) { Tetromino() }
+        val board = TetrisBoard(2, 2) { SquareTetromino() }
 
         board.tick()
         board.tick()
