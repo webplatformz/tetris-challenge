@@ -11,5 +11,5 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
     JsonSubTypes.Type(TetrisBoardResponse::class),
     JsonSubTypes.Type(TetrisPieceResponse::class)
 )
-interface MessageResponse {
+interface ResponseMessage {
 }

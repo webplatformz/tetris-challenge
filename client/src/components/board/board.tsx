@@ -1,5 +1,5 @@
 import {Component, h, Host, Prop} from '@stencil/core';
-import {Block} from '../root/root';
+import {BoardState} from '../game/game';
 
 @Component({
   tag: 'app-board',
@@ -7,15 +7,17 @@ import {Block} from '../root/root';
   shadow: true,
 })
 export class Board {
-  @Prop() state: readonly Block[][] = [[]];
+  @Prop() state: BoardState;
 
   render() {
-    return (
-      <Host>
-        <div class='board'>
-          {this.state.flatMap(row => row.map(element => (<div class='block' data-type={element}/>)))}
-        </div>
-      </Host>
-    );
+    if (this.state) {
+      return (
+        <Host>
+          <div class='board'>
+            {this.state.flatMap(row => row.map(element => (<div class='block' data-type={element}/>)))}
+          </div>
+        </Host>
+      );
+    }
   }
 }

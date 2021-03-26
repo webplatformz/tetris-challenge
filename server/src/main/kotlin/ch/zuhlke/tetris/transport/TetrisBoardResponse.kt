@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName
 @JsonTypeName("BOARD")
 data class TetrisBoardResponse(
     val board: Array<IntArray>,
-) : MessageResponse {
+) : ResponseMessage {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -1,6 +1,6 @@
 name: Node CI
 
-on: [push]
+on: [ push ]
 
 jobs:
   test:
@@ -11,8 +11,8 @@ jobs:
         working-directory: 'client'
     strategy:
       matrix:
-        node_version: ['15']
-        os: [windows-latest, macos-latest]
+        node_version: [ '14' ]
+        os: [ windows-latest, macos-latest ]
 
     steps:
       - name: Checkout
@@ -26,11 +26,11 @@ jobs:
       - name: npm install
         run: npm ci
 
-      - name: test
-        run: npm run test
-
       - name: stencil build
         run: npm run build
+
+      - name: test
+        run: npm run test
 
   deploy:
     name: Deploy main to GitHub Pages
