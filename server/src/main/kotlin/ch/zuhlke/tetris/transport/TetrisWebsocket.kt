@@ -7,11 +7,12 @@ import javax.websocket.*
 import javax.websocket.server.PathParam
 import javax.websocket.server.ServerEndpoint
 
+
 @ServerEndpoint("/tetris/{username}")
 class TetrisWebsocket(val objectMapper: ObjectMapper, val log: Logger) {
 
-    var sessions: MutableMap<String, Session> = ConcurrentHashMap()
-    val requestHandler = RequestHandler()
+    private var sessions: MutableMap<String, Session> = ConcurrentHashMap()
+    private val requestHandler = RequestHandler(objectMapper)
 
     @OnOpen
     fun onOpen(session: Session, @PathParam("username") username: String) {
@@ -35,10 +36,7 @@ class TetrisWebsocket(val objectMapper: ObjectMapper, val log: Logger) {
             log.info("Received message from $username: $message")
             val request = objectMapper.readValue(message, RequestMessage::class.java)
 
-            val response = requestHandler.handle(request)
-            if (response != null) {
-                sessions[username]?.asyncRemote?.sendText(objectMapper.writeValueAsString(response))
-            }
+            requestHandler.handle(request, sessions[username])
         } catch (e: Exception) {
             log.error("onMessage failed", e)
         }

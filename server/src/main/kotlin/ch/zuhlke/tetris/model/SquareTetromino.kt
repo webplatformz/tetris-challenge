@@ -9,4 +9,6 @@ class SquareTetromino(
     )
 ) : Tetromino() {
     override val type = 1
+
+    override fun rotateRight() = Unit
 }

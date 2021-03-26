@@ -1,9 +1,13 @@
 package ch.zuhlke.tetris.model
 
+private val noop: (Any) -> Unit = { _ -> }
+
 class TetrisBoard(
     private val width: Int,
     private val height: Int,
-    private val tetrominoProvider: () -> Tetromino
+    private val boardChanged: ((Array<IntArray>) -> Unit) = noop,
+    private val pieceChange: ((Tetromino) -> Unit) = noop,
+    private val tetrominoProvider: () -> Tetromino,
 ) {
 
     private var state = Array(height) { IntArray(width) { 0 } }
@@ -11,6 +15,7 @@ class TetrisBoard(
 
     init {
         activeTetromino = tetrominoProvider()
+        boardChanged(state)
     }
 
     override fun toString(): String {
@@ -20,13 +25,16 @@ class TetrisBoard(
     }
 
     fun tick() {
-        if (isTetrominoAtBottom()) {
+        if (isTetrominoBlocked()) {
             removeCompleted()
 
             activeTetromino = tetrominoProvider()
+            boardChanged(state)
         }
 
         activeTetromino.moveDown()
+
+        pieceChange(activeTetromino)
     }
 
     private fun removeCompleted() {
@@ -40,9 +48,14 @@ class TetrisBoard(
         return line.all { it > 0 }
     }
 
-    private fun isTetrominoAtBottom(): Boolean {
-        return activeTetromino.positions.any { it.y >= height - 1 }
+    private fun isTetrominoBlocked(): Boolean {
+        return activeTetromino.positions
+            .filter { it.y in 0 until height }
+            .any { it.isAtBottom() || it.isBlockedByOther() }
     }
+
+    private fun Position.isBlockedByOther() = state[y + 1][x] != 0
+    private fun Position.isAtBottom() = y >= height - 1
 
     private fun mergedState(): Array<IntArray> {
         val merged = cloneState()
