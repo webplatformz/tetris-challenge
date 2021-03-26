@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 )
 @JsonSubTypes(
     JsonSubTypes.Type(CreateGameRequest::class),
+    JsonSubTypes.Type(MovePieceRequest::class),
+    JsonSubTypes.Type(RotatePieceRequest::class),
 )
 interface RequestMessage {
 }
