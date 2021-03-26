@@ -1,9 +1,30 @@
 package ch.zuhlke.tetris.model
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 
 class TetrisBoardTest {
+    @Test
+    fun `should stop tetromino on collision`() {
+        val board = TetrisBoard(3, 6) { SquareTetromino() }
+
+        repeat(11) {
+            board.tick()
+        }
+
+        assertEquals(
+            """
+            |1 1 0
+            |0 0 0
+            |1 1 0
+            |1 1 0
+            |1 1 0
+            |1 1 0
+            """.trimMargin(),
+            board.toString()
+        )
+    }
 
     @Test
     fun `create board`() {
@@ -73,9 +94,9 @@ class TetrisBoardTest {
     fun `tick calls pieceChange with updated piece when piece has not reached the bottom`() {
         lateinit var actualTetromino: Tetromino
         val board = TetrisBoard(
-                width = 2,
-                height = 2,
-                pieceChange = { tetromino -> actualTetromino = tetromino }
+            width = 2,
+            height = 2,
+            pieceChange = { tetromino -> actualTetromino = tetromino }
         ) { SquareTetromino() }
 
         board.tick()
@@ -106,9 +127,9 @@ class TetrisBoardTest {
     fun `should call boardChange with initial board`() {
         var actualBoard: Array<IntArray>? = null
         TetrisBoard(
-                width = 2,
-                height = 2,
-                boardChanged = { actualBoard = it }
+            width = 2,
+            height = 2,
+            boardChanged = { actualBoard = it }
         ) { SquareTetromino() }
 
         assertNotNull(actualBoard)
