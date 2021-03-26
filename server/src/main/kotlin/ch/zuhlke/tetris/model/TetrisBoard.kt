@@ -29,6 +29,10 @@ class TetrisBoard(
         activeTetromino.moveDown()
     }
 
+    fun getState(): Array<IntArray> {
+        return cloneState()
+    }
+
     private fun removeCompleted() {
         val reducedState = mergedState().filter { !isLineComplete(it) }
         val linesToAdd = state.size - reducedState.size
