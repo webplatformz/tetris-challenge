@@ -1,9 +1,13 @@
 package ch.zuhlke.tetris.model
 
+private val noop: (Any) -> Unit = { _ -> }
+
 class TetrisBoard(
     private val width: Int,
     private val height: Int,
-    private val tetrominoProvider: () -> Tetromino
+    private val boardChanged: ((Array<IntArray>) -> Unit) = noop,
+    private val pieceChange: ((Tetromino) -> Unit) = noop,
+    private val tetrominoProvider: () -> Tetromino,
 ) {
 
     private var state = Array(height) { IntArray(width) { 0 } }
@@ -24,9 +28,12 @@ class TetrisBoard(
             removeCompleted()
 
             activeTetromino = tetrominoProvider()
+            boardChanged(state)
         }
 
         activeTetromino.moveDown()
+
+        pieceChange(activeTetromino)
     }
 
     fun getState(): Array<IntArray> {

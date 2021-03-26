@@ -1,6 +1,6 @@
 package ch.zuhlke.tetris.model
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class TetrisBoardTest {
@@ -67,5 +67,38 @@ class TetrisBoardTest {
             """.trimMargin(),
             board.toString()
         )
+    }
+
+    @Test
+    fun `tick calls pieceChange with updated piece when piece has not reached the bottom`() {
+        lateinit var actualTetromino: Tetromino
+        val board = TetrisBoard(
+                width = 2,
+                height = 2,
+                pieceChange = { tetromino -> actualTetromino = tetromino }
+        ) { SquareTetromino() }
+
+        board.tick()
+
+        val expected = SquareTetromino().moveDown()
+        assertEquals(expected, actualTetromino)
+    }
+
+    @Test
+    fun `tick calls boardChange with updated board when a piece cannot move any further`() {
+        var actualBoard: Array<IntArray>? = null
+        val board = TetrisBoard(
+                width = 2,
+                height = 2,
+                boardChanged = { actualBoard = it }
+        ) { SquareTetromino() }
+
+        board.tick()
+        assertNull(actualBoard)
+        board.tick()
+        assertNull(actualBoard)
+
+        board.tick()
+        assertNotNull(actualBoard)
     }
 }
