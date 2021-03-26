@@ -1,15 +1,18 @@
 package ch.zuhlke.tetris.transport
 
-class RequestHandler {
+import ch.zuhlke.tetris.game.Game
+import com.fasterxml.jackson.databind.ObjectMapper
+import javax.websocket.Session
 
-    fun handle(request: RequestMessage): MessageResponse? {
-        // game start x
-        /// create game instance x
-        /// -> neues board
-        /// -> game loop start
-        /// -> listen to changes
-        /// -> broadcast on change
+class RequestHandler(private val objectMapper: ObjectMapper) {
 
-        return null
+    fun handle(request: RequestMessage, session: Session?) {
+        if (request is CreateGameRequest) {
+            val game = Game()
+            game.start {
+                val tetrisBoardResponse = TetrisBoardResponse(it)
+                session?.asyncRemote?.sendText(objectMapper.writeValueAsString(tetrisBoardResponse))
+            }
+        }
     }
 }
