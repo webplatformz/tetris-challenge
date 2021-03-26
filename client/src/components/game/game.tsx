@@ -1,14 +1,16 @@
 import {Component, h, Host, State} from '@stencil/core';
 import {initializeWebSocket, onMessage, startGame} from '../../webSocketApi';
 
+export type BoardState = number[][];
+
 @Component({
   tag: 'app-game',
   styleUrl: 'game.scss',
   shadow: true,
 })
 export class Game {
-  @State() currentBoard: number[][] = [[]];
-  baseBoard: number[][] = [[]];
+  @State() currentBoard: BoardState = [[]];
+  baseBoard: BoardState = [[]];
 
   render() {
     return (
@@ -28,20 +30,24 @@ export class Game {
           this.currentBoard = response.board;
           break;
         case 'PIECE':
-          const xs = response.movingPiece.map(piece => piece.x);
-          const ys = response.movingPiece.map(piece => piece.y);
-
-          this.currentBoard = this.baseBoard.map((row, index) => {
-            if (!ys.includes(index)) {
-              return row;
-            }
-
-            return row.map((currentPieceType, index) => xs.includes(index) ? response.pieceType : currentPieceType);
-          });
+          this.currentBoard = updateBoardWithPiece(this.baseBoard, response);
           break;
         default:
           break;
       }
     });
   }
+}
+
+function updateBoardWithPiece(baseBoard: BoardState, response: TetrisPieceResponse): BoardState  {
+  const xs = response.movingPiece.map(piece => piece.x);
+  const ys = response.movingPiece.map(piece => piece.y);
+
+  return baseBoard.map((row, index) => {
+    if (!ys.includes(index)) {
+      return row;
+    }
+
+    return row.map((currentPieceType, index) => xs.includes(index) ? response.pieceType : currentPieceType);
+  });
 }

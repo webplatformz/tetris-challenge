@@ -1,4 +1,5 @@
 import {Component, h, Host, Prop} from '@stencil/core';
+import {BoardState} from '../game/game';
 
 @Component({
   tag: 'app-board',
@@ -6,7 +7,7 @@ import {Component, h, Host, Prop} from '@stencil/core';
   shadow: true,
 })
 export class Board {
-  @Prop() state: readonly number[][];
+  @Prop() state: BoardState;
 
   render() {
     return (
