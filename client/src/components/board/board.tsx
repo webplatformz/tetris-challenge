@@ -1,5 +1,4 @@
 import {Component, h, Host, Prop} from '@stencil/core';
-import {Block} from '../root/root';
 
 @Component({
   tag: 'app-board',
@@ -7,7 +6,7 @@ import {Block} from '../root/root';
   shadow: true,
 })
 export class Board {
-  @Prop() state: readonly Block[][] = [[]];
+  @Prop() state: readonly number[][];
 
   render() {
     return (
