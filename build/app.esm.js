@@ -1,1 +1,1 @@
-import{p,b as t}from"./p-53b3fe29.js";(()=>{const t=import.meta.url,a={};return""!==t&&(a.resourcesUrl=new URL(".",t).href),p(a)})().then((p=>t([["p-c8c84586",[[1,"app-root",{state:[32]}],[1,"app-board",{state:[16]}]]]],p)));
+import{p,b as r}from"./p-6b4573be.js";(()=>{const r=import.meta.url,a={};return""!==r&&(a.resourcesUrl=new URL(".",r).href),p(a)})().then((p=>r([["p-6c12d8c3",[[1,"app-root"],[1,"app-game",{currentBoard:[32]},[[8,"keydown","keydownHandler"]]],[1,"app-board",{state:[16]}]]]],p)));
