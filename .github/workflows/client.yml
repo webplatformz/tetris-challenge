@@ -11,7 +11,7 @@ jobs:
         working-directory: 'client'
     strategy:
       matrix:
-        node_version: ['15']
+        node_version: ['14']
         os: [windows-latest, macos-latest]
 
     steps:
