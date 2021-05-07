@@ -15,6 +15,10 @@ abstract class Tetromino {
         return this
     }
 
+    fun moveLeft(steps: Int = 1): Tetromino {
+        return moveRight(-steps)
+    }
+
     abstract fun rotateRight()
 
     override fun equals(other: Any?): Boolean {

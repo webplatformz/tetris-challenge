@@ -17,6 +17,12 @@ class RequestHandler(private val objectMapper: ObjectMapper) {
             if (request.direction == Direction.RIGHT) {
                 game.rotateRight(session)
             }
+        } else if (request is MovePieceRequest) {
+            if (request.direction == Direction.RIGHT) {
+                game.moveRight(session)
+            } else {
+                game.moveLeft(session)
+            }
         }
     }
 }

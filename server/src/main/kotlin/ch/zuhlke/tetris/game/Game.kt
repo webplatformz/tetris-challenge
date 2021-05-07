@@ -44,6 +44,14 @@ class Game(private val objectMapper: ObjectMapper) {
         boardsBySession[session]?.rotateRight()
     }
 
+    fun moveRight(session: Session) {
+        boardsBySession[session]?.moveRight()
+    }
+
+    fun moveLeft(session: Session) {
+        boardsBySession[session]?.moveLeft()
+    }
+
     fun addPlayer(
         session: Session,
         onBoardChanged: (state: Array<IntArray>) -> Unit,

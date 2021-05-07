@@ -39,6 +39,25 @@ class TetrisBoard(
 
     fun rotateRight() {
         activeTetromino.rotateRight()
+        pieceChange(activeTetromino)
+    }
+
+    fun moveRight() {
+        activeTetromino.moveRight(1)
+        if (illegalPosition()) {
+            activeTetromino.moveRight(-1)
+        } else {
+            pieceChange(activeTetromino)
+        }
+    }
+
+    fun moveLeft() {
+        activeTetromino.moveLeft(1)
+        if (illegalPosition()) {
+            activeTetromino.moveLeft(-1)
+        } else {
+            pieceChange(activeTetromino)
+        }
     }
 
     private fun removeCompleted() {
@@ -55,11 +74,19 @@ class TetrisBoard(
     private fun isTetrominoBlocked(): Boolean {
         return activeTetromino.positions
             .filter { it.y in 0 until height }
-            .any { it.isAtBottom() || it.isBlockedByOther() }
+            .any { it.isAtBottom() || it.isBlockedByOtherBelow() }
     }
 
-    private fun Position.isBlockedByOther() = state[y + 1][x] != 0
+    private fun illegalPosition(): Boolean {
+        return activeTetromino.positions
+            .filter { it.y in 0 until height }
+            .any { it.isOutsideBoard() || it.isOccupied() }
+    }
+
+    private fun Position.isBlockedByOtherBelow() = state[y + 1][x] != 0
     private fun Position.isAtBottom() = y >= height - 1
+    private fun Position.isOccupied() = state[y][x] != 0
+    private fun Position.isOutsideBoard() = x < 0 || x >= width || y < 0 || y >= height
 
     private fun mergedState(): Array<IntArray> {
         val merged = cloneState()
