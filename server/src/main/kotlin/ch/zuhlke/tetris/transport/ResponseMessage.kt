@@ -9,7 +9,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
         property = "type")
 @JsonSubTypes(
     JsonSubTypes.Type(TetrisBoardResponse::class),
-    JsonSubTypes.Type(TetrisPieceResponse::class)
+    JsonSubTypes.Type(TetrisPieceResponse::class),
+    JsonSubTypes.Type(GameErrorResponse::class),
+    JsonSubTypes.Type(GameStartedResponse::class),
 )
 interface ResponseMessage {
 }

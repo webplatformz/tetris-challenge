@@ -15,6 +15,7 @@ export class Game {
   @Prop() username: string;
 
   baseBoard: BoardState = [[]];
+  isRunning = false;
 
   render() {
     return (
@@ -23,17 +24,24 @@ export class Game {
           <h1>Tetris</h1>
         </header>
         <main class="board">
-          <app-board state={this.currentBoard}/>
+          {
+            this.isRunning
+              ? <app-board state={this.currentBoard}/>
+              : <button onClick={() => startGame()}>Start Game</button>
+          }
         </main>
       </Host>
     );
   }
 
   connectedCallback(): void {
-    initializeWebSocket(this.gameId, this.username).then(() => startGame());
+    void initializeWebSocket(this.gameId, this.username);
     onMessage((response) => {
       console.log('Received message', response);
       switch (response.type) {
+        case 'GAME_STARTED':
+          this.isRunning = true;
+          break;
         case 'BOARD':
           this.baseBoard = response.board;
           this.currentBoard = response.board;

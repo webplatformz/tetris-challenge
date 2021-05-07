@@ -4,6 +4,8 @@ import ch.zuhlke.tetris.model.SquareTetromino
 import ch.zuhlke.tetris.model.StraightTetromino
 import ch.zuhlke.tetris.model.TetrisBoard
 import ch.zuhlke.tetris.model.Tetromino
+import ch.zuhlke.tetris.transport.GameStartedResponse
+import com.fasterxml.jackson.databind.ObjectMapper
 import java.util.*
 import javax.websocket.Session
 import kotlin.concurrent.thread
@@ -12,7 +14,7 @@ const val CYCLE_TIME: Long = 500
 const val BOARD_WIDTH = 10
 const val BOARD_HEIGHT = 20
 
-class Game {
+class Game(private val objectMapper: ObjectMapper) {
     val id: String = UUID.randomUUID().toString()
     private var isRunning: Boolean = false
     private val boardsBySession = mutableMapOf<Session, TetrisBoard>()
@@ -23,12 +25,19 @@ class Game {
 
     fun start() {
         isRunning = true
+        notifyPlayersAboutStart()
         thread {
             while (isRunning) {
                 boardsBySession.values.forEach { it.tick() }
                 Thread.sleep(CYCLE_TIME)
             }
         }
+    }
+
+    private fun notifyPlayersAboutStart() {
+        // this is f** disgusting, obviously
+        val startResponse = GameStartedResponse("Game started")
+        boardsBySession.keys.forEach { it.asyncRemote?.sendText(objectMapper.writeValueAsString(startResponse)) }
     }
 
     fun rotateRight(session: Session) {

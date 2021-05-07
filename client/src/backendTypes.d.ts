@@ -1,10 +1,14 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.29.814 on 2021-05-07 14:30:32.
+// Generated using typescript-generator version 2.29.814 on 2021-05-07 15:07:45.
 
 interface GameErrorResponse extends ResponseMessage {
     type: "GAME_ERROR";
     message: string;
+}
+
+interface GameStartedResponse extends ResponseMessage {
+    type: "GAME_STARTED";
 }
 
 interface MovePieceRequest extends RequestMessage {
@@ -22,7 +26,7 @@ interface RequestMessage {
 }
 
 interface ResponseMessage {
-    type: "GAME_ERROR" | "BOARD" | "PIECE";
+    type: "GAME_ERROR" | "GAME_STARTED" | "BOARD" | "PIECE";
 }
 
 interface RotatePieceRequest extends RequestMessage {
@@ -49,4 +53,4 @@ type Direction = "LEFT" | "RIGHT";
 
 type RequestMessageUnion = StartGameRequest | MovePieceRequest | RotatePieceRequest;
 
-type ResponseMessageUnion = TetrisBoardResponse | TetrisPieceResponse;
+type ResponseMessageUnion = TetrisBoardResponse | TetrisPieceResponse | GameErrorResponse | GameStartedResponse;
