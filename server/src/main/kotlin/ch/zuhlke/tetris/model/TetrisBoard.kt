@@ -37,6 +37,10 @@ class TetrisBoard(
         pieceChange(activeTetromino)
     }
 
+    fun rotateRight() {
+        activeTetromino.rotateRight()
+    }
+
     private fun removeCompleted() {
         val reducedState = mergedState().filter { !isLineComplete(it) }
         val linesToAdd = state.size - reducedState.size

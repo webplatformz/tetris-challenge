@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
     property = "type"
 )
 @JsonSubTypes(
-    JsonSubTypes.Type(CreateGameRequest::class),
+    JsonSubTypes.Type(StartGameRequest::class),
     JsonSubTypes.Type(MovePieceRequest::class),
     JsonSubTypes.Type(RotatePieceRequest::class),
 )

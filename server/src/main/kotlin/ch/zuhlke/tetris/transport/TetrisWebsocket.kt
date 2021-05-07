@@ -1,5 +1,6 @@
 package ch.zuhlke.tetris.transport
 
+import ch.zuhlke.tetris.game.GameStore
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.jboss.logging.Logger
 import java.util.concurrent.ConcurrentHashMap
@@ -8,15 +9,25 @@ import javax.websocket.server.PathParam
 import javax.websocket.server.ServerEndpoint
 
 
-@ServerEndpoint("/tetris/{username}")
-class TetrisWebsocket(val objectMapper: ObjectMapper, val log: Logger) {
+@ServerEndpoint("/tetris/{gameId}/{username}")
+class TetrisWebsocket(
+    private val objectMapper: ObjectMapper,
+    private val log: Logger,
+    private val gameStore: GameStore
+) {
 
     private var sessions: MutableMap<String, Session> = ConcurrentHashMap()
     private val requestHandler = RequestHandler(objectMapper)
 
     @OnOpen
-    fun onOpen(session: Session, @PathParam("username") username: String) {
+    fun onOpen(session: Session, @PathParam("gameId") gameId: String, @PathParam("username") username: String) {
         sessions[username] = session
+        val game = gameStore.getGame(gameId)
+        if (game != null) {
+            game.addPlayer(session)
+        } else {
+            session.close(CloseReason({ 1008 }, "YOU STOOPID"))
+        }
     }
 
     @OnClose
@@ -30,13 +41,13 @@ class TetrisWebsocket(val objectMapper: ObjectMapper, val log: Logger) {
     }
 
     @OnMessage
-    fun onMessage(message: String, @PathParam("username") username: String) {
+    fun onMessage(message: String, @PathParam("gameId") gameId: String, @PathParam("username") username: String) {
         // If we don't check for exceptions, they'll be swallowed silently
         try {
             log.info("Received message from $username: $message")
             val request = objectMapper.readValue(message, RequestMessage::class.java)
 
-            requestHandler.handle(request, sessions[username])
+            requestHandler.handle(request, sessions[username], gameStore.getGame(gameId)!!)
         } catch (e: Exception) {
             log.error("onMessage failed", e)
         }
