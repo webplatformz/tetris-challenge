@@ -24,7 +24,17 @@ class TetrisWebsocket(
         sessions[username] = session
         val game = gameStore.getGame(gameId)
         if (game != null) {
-            game.addPlayer(session)
+            game.addPlayer(
+                session = session,
+                onBoardChanged = {
+                    val tetrisBoardResponse = TetrisBoardResponse(it)
+                    session.asyncRemote?.sendText(objectMapper.writeValueAsString(tetrisBoardResponse))
+                },
+                onPieceChanged = {
+                    val mappedPositions: List<PositionResponse> = it.positions.map { PositionResponse(it.x, it.y) }
+                    val pieceResponse = TetrisPieceResponse(mappedPositions, it.type)
+                    session.asyncRemote?.sendText(objectMapper.writeValueAsString(pieceResponse))
+                })
         } else {
             session.close(CloseReason({ 1008 }, "YOU STOOPID"))
         }
@@ -47,7 +57,7 @@ class TetrisWebsocket(
             log.info("Received message from $username: $message")
             val request = objectMapper.readValue(message, RequestMessage::class.java)
 
-            requestHandler.handle(request, sessions[username], gameStore.getGame(gameId)!!)
+            requestHandler.handle(request, sessions[username]!!, gameStore.getGame(gameId)!!)
         } catch (e: Exception) {
             log.error("onMessage failed", e)
         }

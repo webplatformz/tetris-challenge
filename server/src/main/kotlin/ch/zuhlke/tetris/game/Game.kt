@@ -15,13 +15,29 @@ const val BOARD_HEIGHT = 20
 class Game {
     val id: String = UUID.randomUUID().toString()
     private var isRunning: Boolean = true
+    private val boardsBySession = mutableMapOf<Session, TetrisBoard>()
 
     private var tetrominoIndex = 0
 
-    private lateinit var tetrisBoard: TetrisBoard
+    fun start() {
+        thread {
+            while (isRunning) {
+                boardsBySession.values.forEach { it.tick() }
+                Thread.sleep(CYCLE_TIME)
+            }
+        }
+    }
 
-    fun start(onBoardChanged: (state: Array<IntArray>) -> Unit, onPieceChanged: (Tetromino) -> Unit) {
-        tetrisBoard = TetrisBoard(
+    fun rotateRight(session: Session) {
+        boardsBySession[session]?.rotateRight()
+    }
+
+    fun addPlayer(
+        session: Session,
+        onBoardChanged: (state: Array<IntArray>) -> Unit,
+        onPieceChanged: (Tetromino) -> Unit
+    ) {
+        boardsBySession[session] = TetrisBoard(
             width = BOARD_WIDTH,
             height = BOARD_HEIGHT,
             boardChanged = onBoardChanged,
@@ -33,20 +49,5 @@ class Game {
                 StraightTetromino().moveRight((BOARD_WIDTH / 2) - 2)
             }
         }
-
-        thread {
-            while (isRunning) {
-                tetrisBoard.tick()
-                Thread.sleep(CYCLE_TIME)
-            }
-        }
-    }
-
-    fun rotateRight() {
-        tetrisBoard.rotateRight()
-    }
-
-    fun addPlayer(session: Session) {
-        TODO("Not yet implemented")
     }
 }
