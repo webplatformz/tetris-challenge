@@ -21,6 +21,8 @@
   },
   "license": "MIT",
   "jest": {
-    "setupFiles": ["setupJest.ts"]
+    "setupFiles": [
+      "setupJest.ts"
+    ]
   }
 }

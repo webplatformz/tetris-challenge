@@ -7,7 +7,12 @@ import javax.websocket.Session
 class RequestHandler(private val objectMapper: ObjectMapper) {
     fun handle(request: RequestMessage, session: Session, game: Game) {
         if (request is StartGameRequest) {
-            game.start()
+            if (game.isRunning()) {
+                val errorResponse = GameErrorResponse("Game already started")
+                session.asyncRemote?.sendText(objectMapper.writeValueAsString(errorResponse))
+            } else {
+                game.start()
+            }
         } else if (request is RotatePieceRequest) {
             if (request.direction == Direction.RIGHT) {
                 game.rotateRight(session)

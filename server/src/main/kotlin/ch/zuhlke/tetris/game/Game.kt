@@ -14,12 +14,15 @@ const val BOARD_HEIGHT = 20
 
 class Game {
     val id: String = UUID.randomUUID().toString()
-    private var isRunning: Boolean = true
+    private var isRunning: Boolean = false
     private val boardsBySession = mutableMapOf<Session, TetrisBoard>()
 
-    private var tetrominoIndex = 0
+    fun isRunning(): Boolean {
+        return this.isRunning
+    }
 
     fun start() {
+        isRunning = true
         thread {
             while (isRunning) {
                 boardsBySession.values.forEach { it.tick() }
@@ -43,7 +46,7 @@ class Game {
             boardChanged = onBoardChanged,
             pieceChange = onPieceChanged
         ) {
-            if (tetrominoIndex++ % 2 == 0) {
+            if ((0..1).random() == 0) {
                 SquareTetromino().moveRight((BOARD_WIDTH / 2) - 1)
             } else {
                 StraightTetromino().moveRight((BOARD_WIDTH / 2) - 2)

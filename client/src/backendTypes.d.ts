@@ -1,6 +1,11 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.29.814 on 2021-05-07 12:29:20.
+// Generated using typescript-generator version 2.29.814 on 2021-05-07 14:30:32.
+
+interface GameErrorResponse extends ResponseMessage {
+    type: "GAME_ERROR";
+    message: string;
+}
 
 interface MovePieceRequest extends RequestMessage {
     type: "MOVE_PIECE";
@@ -17,7 +22,7 @@ interface RequestMessage {
 }
 
 interface ResponseMessage {
-    type: "BOARD" | "PIECE";
+    type: "GAME_ERROR" | "BOARD" | "PIECE";
 }
 
 interface RotatePieceRequest extends RequestMessage {
