@@ -1,10 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.29.814 on 2021-03-26 16:21:59.
-
-interface CreateGameRequest extends RequestMessage {
-    type: "CREATE_GAME";
-}
+// Generated using typescript-generator version 2.29.814 on 2021-05-07 12:29:20.
 
 interface MovePieceRequest extends RequestMessage {
     type: "MOVE_PIECE";
@@ -17,7 +13,7 @@ interface PositionResponse {
 }
 
 interface RequestMessage {
-    type: "CREATE_GAME" | "MOVE_PIECE" | "ROTATE_PIECE";
+    type: "MOVE_PIECE" | "ROTATE_PIECE" | "START_GAME";
 }
 
 interface ResponseMessage {
@@ -27,6 +23,10 @@ interface ResponseMessage {
 interface RotatePieceRequest extends RequestMessage {
     type: "ROTATE_PIECE";
     direction: Direction;
+}
+
+interface StartGameRequest extends RequestMessage {
+    type: "START_GAME";
 }
 
 interface TetrisBoardResponse extends ResponseMessage {
@@ -42,6 +42,6 @@ interface TetrisPieceResponse extends ResponseMessage {
 
 type Direction = "LEFT" | "RIGHT";
 
-type RequestMessageUnion = CreateGameRequest | MovePieceRequest | RotatePieceRequest;
+type RequestMessageUnion = StartGameRequest | MovePieceRequest | RotatePieceRequest;
 
 type ResponseMessageUnion = TetrisBoardResponse | TetrisPieceResponse;

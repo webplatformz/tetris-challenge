@@ -19,5 +19,8 @@
     "jest-cli": "26.6.3",
     "puppeteer": "5.5.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "jest": {
+    "setupFiles": ["setupJest.ts"]
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, h, Host, Listen, State} from '@stencil/core';
+import {Component, h, Host, Listen, Prop, State} from '@stencil/core';
 import {initializeWebSocket, movePiece, onMessage, rotatePiece, startGame} from '../../webSocketApi';
 
 export type BoardState = number[][];
@@ -10,6 +10,10 @@ export type BoardState = number[][];
 })
 export class Game {
   @State() currentBoard: BoardState = [[]];
+
+  @Prop() gameId: string;
+  @Prop() username: string;
+
   baseBoard: BoardState = [[]];
 
   render() {
@@ -26,7 +30,7 @@ export class Game {
   }
 
   connectedCallback(): void {
-    initializeWebSocket('myfancyusername').then(() => startGame());
+    initializeWebSocket(this.gameId, this.username).then(() => startGame());
     onMessage((response) => {
       console.log('Received message', response);
       switch (response.type) {

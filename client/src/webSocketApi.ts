@@ -1,14 +1,14 @@
 let webSocket: WebSocket;
 
-export function initializeWebSocket(name: string): Promise<void> {
+export function initializeWebSocket(gameId: string, username: string): Promise<void> {
   return new Promise((resolve) => {
-    webSocket = new WebSocket(`ws://localhost:8080/tetris/${name}`);
+    webSocket = new WebSocket(`ws://localhost:8080/tetris/${gameId}/${username}`);
     webSocket.onopen = () => {
       console.log('WebSocket opened');
       resolve();
     };
     webSocket.onerror = console.error;
-    webSocket.onclose = (closeEvent) => console.log('WebSocket closed', closeEvent);
+    webSocket.onclose = (closeEvent) => console.log('WebSocket closed: ', closeEvent.reason);
   });
 }
 
@@ -17,7 +17,7 @@ export function onMessage(cb: (response: ResponseMessageUnion) => void): void {
 }
 
 export function startGame(): void {
-  send({type: 'CREATE_GAME'});
+  send({type: 'START_GAME'});
 }
 
 export function movePiece(direction: Direction) {
