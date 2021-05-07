@@ -16,6 +16,11 @@ export class Lobby {
     this.availableGames = await requestGames();
   }
 
+  async clickCreateNewGame() {
+    await createNewGame();
+    this.availableGames = await requestGames();
+  }
+
   render() {
     return (
       <Host>
@@ -23,7 +28,7 @@ export class Lobby {
           <h1>Lobby</h1>
         </header>
         <main class="board">
-          <button onClick={() => createNewGame()}>Create new</button>
+          <button onClick={() => this.clickCreateNewGame()}>Create new</button>
 
           <ul>
             { this.availableGames.map(gameId => (<li onClick={() => this.gameSelected.emit(gameId)}>{gameId}</li>))}
