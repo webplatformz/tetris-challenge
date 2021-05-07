@@ -2,6 +2,7 @@ package ch.zuhlke.tetris.configuration
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.quarkus.jackson.ObjectMapperCustomizer
 import javax.inject.Singleton
 
@@ -10,5 +11,6 @@ class JacksonConfiguration : ObjectMapperCustomizer {
     override fun customize(objectMapper: ObjectMapper) {
         // To suppress serializing properties with null values
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
+        objectMapper.registerModule(KotlinModule())
     }
 }
