@@ -92,6 +92,55 @@ class TetrisBoardTest {
     }
 
     @Test
+    fun `element moved horizontally`() {
+        val board = TetrisBoard(3, 3) { SquareTetromino() }
+
+        board.tick()
+        board.tick()
+        board.moveRight()
+
+        assertEquals(
+            """
+            |0 1 1
+            |0 1 1
+            |0 0 0
+            """.trimMargin(),
+            board.toString()
+        )
+
+        board.moveLeft()
+
+        assertEquals(
+            """
+            |1 1 0
+            |1 1 0
+            |0 0 0
+            """.trimMargin(),
+            board.toString()
+        )
+    }
+
+    @Test
+    fun `element kept inside board after moving too many times`() {
+        val board = TetrisBoard(3, 3) { SquareTetromino() }
+
+        board.tick()
+        board.tick()
+        board.moveRight()
+        board.moveRight()
+        board.moveRight()
+
+        assertEquals(
+            """
+            |0 1 1
+            |0 1 1
+            |0 0 0
+            """.trimMargin(),
+            board.toString()
+        )
+    }
+
+    @Test
     fun `tick calls pieceChange with updated piece when piece has not reached the bottom`() {
         lateinit var actualTetromino: Tetromino
         val board = TetrisBoard(
