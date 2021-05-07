@@ -21,7 +21,9 @@ class GameResource(private val gameStore: GameStore) {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    fun getAllGameIds(): List<String> {
-        return gameStore.getAll().map { it.id }
+    fun getAllOpenGameIds(): List<String> {
+        return gameStore.getAll()
+            .filter { !it.isRunning() }
+            .map { it.id }
     }
 }
